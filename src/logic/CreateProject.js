@@ -1,11 +1,16 @@
 class Project {
   #name;
   #todos;
+  #id;
   constructor(name) {
     this.#name = name;
     this.#todos = [];
+    this.#id = crypto.randomUUID();
   }
 
+  getProjectId() {
+    return this.#id;
+  }
   getProjectName() {
     return this.#name;
   }
