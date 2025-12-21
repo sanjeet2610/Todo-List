@@ -16,7 +16,7 @@ class ProjectManager {
   }
 
   getProject(id) {
-    return this.#allProjects.find((project) => id === project.id);
+    return this.#allProjects.find((project) => id === project.getProjectId());
   }
 
   getCurrentProject() {
@@ -24,7 +24,9 @@ class ProjectManager {
   }
 
   setCurrentProject(id) {
-    const project = this.#allProjects.find((project) => id === project.id);
+    const project = this.#allProjects.find(
+      (project) => id === project.getProjectId()
+    );
     if (project) this.#current = project;
   }
 

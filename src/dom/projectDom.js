@@ -8,6 +8,7 @@ function renderProjects(manager) {
     const projectElement = document.createElement("p");
     projectElement.textContent = name;
     projectElement.dataset.id = project.getProjectId();
+
     sidebar.appendChild(projectElement);
     if (manager.getCurrentProject().getProjectId() === project.getProjectId()) {
       projectElement.style.backgroundColor = "red";
