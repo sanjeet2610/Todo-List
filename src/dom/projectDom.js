@@ -1,6 +1,8 @@
-function renderProjects(manager) {
+function renderProjects(manager, onProjectChange) {
   const sidebar = document.querySelector(".sidebar");
   sidebar.textContent = "";
+  const container = document.querySelector(".container");
+  container.textContent = "";
   const allProjects = manager.getAllProjects();
 
   allProjects.forEach((project) => {
@@ -15,7 +17,8 @@ function renderProjects(manager) {
     }
     projectElement.addEventListener("click", (e) => {
       manager.setCurrentProject(project.getProjectId());
-      renderProjects(manager);
+      renderProjects(manager, onProjectChange);
+      onProjectChange();
     });
   });
 }
