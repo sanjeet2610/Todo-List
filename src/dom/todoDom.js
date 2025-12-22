@@ -6,6 +6,7 @@ function renderTodos(manager) {
   const allTodos = manager.getCurrentProject().getTodos();
   const addTodo = document.createElement("button");
   addTodo.textContent = "New Todo";
+  addTodo.classList.add("new-todo");
   container.appendChild(addTodo);
 
   addTodo.addEventListener("click", () => {
@@ -20,12 +21,14 @@ function renderTodos(manager) {
     const id = todo.getId();
 
     const row = document.createElement("div");
+    row.classList.add("row");
 
     const name = document.createElement("p");
     name.textContent = title;
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.id = "checkbox";
     checkbox.checked = todo.isCompleted();
     if (checkbox.checked) {
       name.style.textDecoration = "line-through";
