@@ -14,16 +14,35 @@ function renderProjects(manager, onProjectChange) {
   const allProjects = manager.getAllProjects();
 
   allProjects.forEach((project) => {
+    const projectRow = document.createElement("div");
+    projectRow.classList.add("projectRow");
     const name = project.getProjectName();
     const projectElement = document.createElement("p");
     projectElement.textContent = name;
     projectElement.dataset.id = project.getProjectId();
 
-    sidebar.appendChild(projectElement);
-    if (manager.getCurrentProject().getProjectId() === project.getProjectId()) {
-      projectElement.style.backgroundColor = "red";
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "x";
+
+    if (project.getProjectName() === "default") {
+      deleteBtn.disabled = true;
+      deleteBtn.style.visibility = "hidden";
     }
-    projectElement.addEventListener("click", (e) => {
+
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      manager.deleteProject(project.getProjectId());
+      renderProjects(manager, onProjectChange);
+      onProjectChange();
+    });
+
+    projectRow.append(projectElement, deleteBtn);
+    sidebar.appendChild(projectRow);
+
+    if (manager.getCurrentProject().getProjectId() === project.getProjectId()) {
+      projectRow.style.backgroundColor = "red";
+    }
+    projectRow.addEventListener("click", (e) => {
       manager.setCurrentProject(project.getProjectId());
       renderProjects(manager, onProjectChange);
       onProjectChange();
@@ -38,6 +57,7 @@ function setUpProjectModal(manager, onProjectChange) {
     const project = document.querySelector("#projectName");
     manager.addProject(project.value);
     renderProjects(manager, onProjectChange);
+    onProjectChange();
     modal.close();
   });
 }
