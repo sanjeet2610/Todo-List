@@ -30,6 +30,20 @@ class ProjectManager {
     if (project) this.#current = project;
   }
 
+  deleteProject(id) {
+    if (id == this.#default.getProjectId()) return;
+
+    const wasCurrent = id === this.#current.getProjectId();
+
+    this.#allProjects = this.#allProjects.filter(
+      (project) => project.getProjectId() !== id
+    );
+
+    if (wasCurrent) {
+      this.#current = this.#default;
+    }
+  }
+
   getAllProjects() {
     return this.#allProjects;
   }

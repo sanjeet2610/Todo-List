@@ -22,6 +22,7 @@
   font-size: 1.3rem;
   padding: 0.5rem;
   border-radius: 1rem;
+  cursor: pointer;
 }
 
 .container {
@@ -41,4 +42,21 @@
 
 .new-todo {
   padding: 0.5rem 1.5rem;
+}
+
+dialog {
+  margin: auto;
+}
+
+.modal::backdrop {
+  background: purple;
+}
+
+.newProject {
+  padding: 0.5rem 2rem;
+  font-size: 1.1rem;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 1rem;
+  border-style: none;
 }

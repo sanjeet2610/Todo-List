@@ -1,6 +1,16 @@
 function renderProjects(manager, onProjectChange) {
   const sidebar = document.querySelector(".sidebar");
   sidebar.textContent = "";
+
+  const newProject = document.createElement("button");
+  newProject.textContent = "New Project";
+  newProject.classList.add("newProject");
+  const modal = document.querySelector(".project-modal");
+  newProject.addEventListener("click", () => {
+    modal.showModal();
+  });
+  sidebar.appendChild(newProject);
+
   const allProjects = manager.getAllProjects();
 
   allProjects.forEach((project) => {
@@ -21,4 +31,15 @@ function renderProjects(manager, onProjectChange) {
   });
 }
 
-export { renderProjects };
+function setUpProjectModal(manager, onProjectChange) {
+  const modal = document.querySelector(".project-modal");
+  const submitBtn = document.querySelector(".submit-button");
+  submitBtn.addEventListener("click", () => {
+    const project = document.querySelector("#projectName");
+    manager.addProject(project.value);
+    renderProjects(manager, onProjectChange);
+    modal.close();
+  });
+}
+
+export { renderProjects, setUpProjectModal };

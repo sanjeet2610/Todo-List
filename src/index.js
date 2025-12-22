@@ -1,4 +1,4 @@
-import { renderProjects } from "./dom/projectDom";
+import { renderProjects, setUpProjectModal } from "./dom/projectDom";
 import { renderTodos, setUpTodoModal } from "./dom/todoDom";
 import { ProjectManager } from "./logic/ProjectManager";
 import { Todo } from "./logic/createTodo";
@@ -13,3 +13,4 @@ const todo1 = new Todo("xyz", "qec", 22, "high");
 manager.getCurrentProject().addTodo(todo1);
 renderTodos(manager);
 setUpTodoModal(manager);
+setUpProjectModal(manager, () => renderTodos(manager));
