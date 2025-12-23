@@ -47,6 +47,14 @@ class ProjectManager {
   getAllProjects() {
     return this.#allProjects;
   }
+
+  clearProjects() {
+    this.#allProjects = [];
+  }
+
+  addExistingProject(project) {
+    this.#allProjects.push(project);
+  }
 }
 
 export { ProjectManager };

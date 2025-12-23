@@ -2,10 +2,10 @@ class Project {
   #name;
   #todos;
   #id;
-  constructor(name) {
+  constructor(name, id = null) {
     this.#name = name;
     this.#todos = [];
-    this.#id = crypto.randomUUID();
+    this.#id = id ?? crypto.randomUUID();
   }
 
   getProjectId() {
@@ -25,6 +25,14 @@ class Project {
 
   getTodos() {
     return this.#todos;
+  }
+
+  toJSON() {
+    return {
+      name: this.#name,
+      id: this.#id,
+      todos: this.#todos.map((todo) => todo.toJSON()),
+    };
   }
 }
 

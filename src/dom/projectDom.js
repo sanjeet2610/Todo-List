@@ -1,3 +1,5 @@
+import { saveState } from "../storage";
+
 function renderProjects(manager, onProjectChange) {
   const sidebar = document.querySelector(".sidebar");
   sidebar.textContent = "";
@@ -32,6 +34,7 @@ function renderProjects(manager, onProjectChange) {
     deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       manager.deleteProject(project.getProjectId());
+      saveState(manager);
       renderProjects(manager, onProjectChange);
       onProjectChange();
     });
@@ -44,6 +47,8 @@ function renderProjects(manager, onProjectChange) {
     }
     projectRow.addEventListener("click", (e) => {
       manager.setCurrentProject(project.getProjectId());
+      saveState(manager);
+
       renderProjects(manager, onProjectChange);
       onProjectChange();
     });
@@ -58,6 +63,7 @@ function setUpProjectModal(manager, onProjectChange) {
   submitBtn.addEventListener("click", () => {
     const project = document.querySelector("#projectName");
     manager.addProject(project.value);
+    saveState(manager);
     renderProjects(manager, onProjectChange);
     onProjectChange();
     projectName.value = "";

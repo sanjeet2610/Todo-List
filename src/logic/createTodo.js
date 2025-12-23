@@ -5,13 +5,13 @@ class Todo {
   #priority;
   #completed;
   #id;
-  constructor(title, description, dueDate, priority) {
+  constructor(title, description, dueDate, priority, id = null) {
     this.#title = title;
     this.#description = description;
     this.#dueDate = dueDate;
     this.#priority = priority;
     this.#completed = false;
-    this.#id = crypto.randomUUID();
+    this.#id = id ?? crypto.randomUUID();
   }
 
   getTitle() {
@@ -51,6 +51,17 @@ class Todo {
     this.#description = description;
     this.#dueDate = dueDate;
     this.#priority = priority;
+  }
+
+  toJSON() {
+    return {
+      title: this.#title,
+      id: this.#id,
+      dueDate: this.#dueDate,
+      priority: this.#priority,
+      description: this.#description,
+      completed: this.#completed,
+    };
   }
 }
 

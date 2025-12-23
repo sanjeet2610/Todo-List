@@ -1,4 +1,5 @@
 import { Todo } from "../logic/createTodo";
+import { saveState } from "../storage";
 
 let editingTodo = null;
 
@@ -48,6 +49,8 @@ function renderTodos(manager) {
     deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", () => {
       manager.getCurrentProject().deleteTodo(id);
+      saveState(manager);
+
       renderTodos(manager);
     });
 
@@ -79,6 +82,7 @@ function renderTodos(manager) {
         todo.markUncomplete();
       }
       renderTodos(manager);
+      saveState(manager);
     });
   });
 }
@@ -102,6 +106,7 @@ function setUpTodoModal(manager) {
         dueDate: dueDate.value,
         priority: priority.value,
       });
+      saveState(manager);
     } else {
       const todo = new Todo(
         title.value,
@@ -110,6 +115,7 @@ function setUpTodoModal(manager) {
         priority.value
       );
       manager.getCurrentProject().addTodo(todo);
+      saveState(manager);
     }
 
     editingTodo = null;
