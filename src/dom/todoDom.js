@@ -1,5 +1,6 @@
 import { Todo } from "../logic/createTodo";
 import { saveState } from "../storage";
+import { format, parseISO } from "date-fns";
 
 let editingTodo = null;
 
@@ -35,12 +36,10 @@ function renderTodos(manager) {
     checkbox.type = "checkbox";
 
     checkbox.checked = todo.isCompleted();
-    if (checkbox.checked) {
-      name.style.textDecoration = "line-through";
-    }
 
     const date = document.createElement("p");
-    date.textContent = dueDate;
+    const formattedDate = format(parseISO(dueDate), "dd MMM yyyy");
+    date.textContent = formattedDate;
 
     const urgency = document.createElement("p");
     urgency.textContent = priority;
@@ -71,6 +70,10 @@ function renderTodos(manager) {
       priority.value = todo.getPriority();
       editingTodo = todo;
     });
+
+    if (checkbox.checked) {
+      row.style.textDecoration = "line-through";
+    }
 
     row.append(checkbox, name, date, urgency, deleteBtn, editBtn);
     container.appendChild(row);
