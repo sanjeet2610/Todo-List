@@ -1,5 +1,7 @@
 import { Todo } from "../logic/createTodo";
 
+let editingTodo = null;
+
 function renderTodos(manager) {
   const container = document.querySelector(".container");
   container.textContent = "";
@@ -8,9 +10,11 @@ function renderTodos(manager) {
   addTodo.textContent = "New Todo";
   addTodo.classList.add("new-todo");
   container.appendChild(addTodo);
+  const modal = document.querySelector(".modal");
 
   addTodo.addEventListener("click", () => {
-    const modal = document.querySelector(".modal");
+    editingTodo = null;
+    document.querySelector(".todo-form").reset();
     modal.showModal();
   });
 
@@ -28,7 +32,7 @@ function renderTodos(manager) {
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.id = "checkbox";
+
     checkbox.checked = todo.isCompleted();
     if (checkbox.checked) {
       name.style.textDecoration = "line-through";
@@ -47,7 +51,25 @@ function renderTodos(manager) {
       renderTodos(manager);
     });
 
-    row.append(checkbox, name, date, urgency, deleteBtn);
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit/View";
+    editBtn.addEventListener("click", () => {
+      modal.showModal();
+      document.querySelector(".todo-form").reset();
+
+      const title = document.querySelector("#title");
+      const desc = document.querySelector("#description");
+      const dueDate = document.querySelector("#dueDate");
+      const priority = document.querySelector("#priority");
+
+      title.value = todo.getTitle();
+      desc.value = todo.getDescription();
+      dueDate.value = todo.getDate();
+      priority.value = todo.getPriority();
+      editingTodo = todo;
+    });
+
+    row.append(checkbox, name, date, urgency, deleteBtn, editBtn);
     container.appendChild(row);
 
     checkbox.addEventListener("change", () => {
@@ -65,22 +87,34 @@ function setUpTodoModal(manager) {
   const modal = document.querySelector(".modal");
   const submitBtn = document.querySelector(".submit");
   const cancelBtn = document.querySelector(".cancel");
+  const form = document.querySelector(".todo-form");
 
   submitBtn.addEventListener("click", () => {
     const title = document.querySelector("#title");
-    const desc = document.querySelector("#description");
+    const description = document.querySelector("#description");
     const dueDate = document.querySelector("#dueDate");
     const priority = document.querySelector("#priority");
 
-    const todo = new Todo(
-      title.value,
-      desc.value,
-      dueDate.value,
-      priority.value
-    );
+    if (editingTodo) {
+      editingTodo.update({
+        title: title.value,
+        description: description.value,
+        dueDate: dueDate.value,
+        priority: priority.value,
+      });
+    } else {
+      const todo = new Todo(
+        title.value,
+        description.value,
+        dueDate.value,
+        priority.value
+      );
+      manager.getCurrentProject().addTodo(todo);
+    }
 
-    manager.getCurrentProject().addTodo(todo);
+    editingTodo = null;
     renderTodos(manager);
+    form.reset();
     modal.close();
   });
 

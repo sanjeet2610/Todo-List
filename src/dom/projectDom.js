@@ -53,11 +53,14 @@ function renderProjects(manager, onProjectChange) {
 function setUpProjectModal(manager, onProjectChange) {
   const modal = document.querySelector(".project-modal");
   const submitBtn = document.querySelector(".submit-button");
+  const projectName = document.querySelector("#projectName");
+
   submitBtn.addEventListener("click", () => {
     const project = document.querySelector("#projectName");
     manager.addProject(project.value);
     renderProjects(manager, onProjectChange);
     onProjectChange();
+    projectName.value = "";
     modal.close();
   });
 }
