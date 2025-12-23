@@ -24,8 +24,8 @@ function renderProjects(manager, onProjectChange) {
     projectElement.dataset.id = project.getProjectId();
 
     const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
-
+    deleteBtn.textContent = "X";
+    deleteBtn.classList.add("delete-btn");
     if (project.getProjectName() === "default") {
       deleteBtn.disabled = true;
       deleteBtn.style.visibility = "hidden";
@@ -60,7 +60,8 @@ function setUpProjectModal(manager, onProjectChange) {
   const submitBtn = document.querySelector(".submit-button");
   const projectName = document.querySelector("#projectName");
 
-  submitBtn.addEventListener("click", () => {
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     const project = document.querySelector("#projectName");
     manager.addProject(project.value);
     saveState(manager);

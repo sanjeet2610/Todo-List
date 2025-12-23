@@ -10,12 +10,12 @@
 }
 
 .sidebar {
-  background-color: violet;
   width: 25%;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  background-image: linear-gradient(to top, #f43b47 0%, #453a94 100%);
 }
 
 .sidebar .projectRow {
@@ -28,7 +28,7 @@
 }
 
 .container {
-  background-color: blueviolet;
+  background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,9 @@
 }
 
 .new-todo {
-  padding: 0.5rem 1.5rem;
+  padding: 0.7rem 3rem;
+  border-style: none;
+  border-radius: 1rem;
 }
 
 dialog {
@@ -61,4 +63,70 @@ dialog {
   margin: 0 auto;
   border-radius: 1rem;
   border-style: none;
+  color: white;
+}
+
+button {
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  cursor: pointer;
+}
+
+.projectRow {
+  background-color: gray;
+}
+
+.projectRow .delete-btn {
+  background-color: transparent;
+  background-image: none;
+  border-style: none;
+  cursor: pointer;
+}
+
+.row {
+  background-image: linear-gradient(
+    -225deg,
+    #231557 0%,
+    #44107a 29%,
+    #ff1361 67%,
+    #fff800 100%
+  );
+  padding: 0.5rem 5rem;
+  border-radius: 1rem;
+  border-style: none;
+}
+
+.row button {
+  padding: 3px 15px;
+  border-style: none;
+  border-radius: 1rem;
+}
+
+.modal {
+  border-radius: 1rem;
+  padding: 0.5rem;
+  background-color: pink;
+}
+.todo-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.todo-form .row {
+  display: grid;
+  gap: 0.5rem;
+  background-image: none;
+}
+
+.project-form {
+  padding: 1rem;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.submit-button {
+  border-style: none;
+  align-self: center;
+  padding: 5px 25px;
+  border-radius: 1rem;
 }
