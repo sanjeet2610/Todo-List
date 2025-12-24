@@ -1,5 +1,6 @@
 import { Todo } from "../logic/createTodo";
 import { saveState } from "../storage";
+import { format, parseISO } from "date-fns";
 
 let editingTodo = null;
 
@@ -37,7 +38,8 @@ function renderTodos(manager) {
     checkbox.checked = todo.isCompleted();
 
     const date = document.createElement("p");
-    date.textContent = dueDate;
+    const parsedDate = parseISO(dueDate);
+    date.textContent = format(parsedDate, "dd MMMM yyyy");
 
     const urgency = document.createElement("p");
     urgency.textContent = priority;
@@ -94,11 +96,17 @@ function setUpTodoModal(manager) {
   const cancelBtn = document.querySelector(".cancel");
   const form = document.querySelector(".todo-form");
 
-  submitBtn.addEventListener("click", () => {
+  submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
     const title = document.querySelector("#title");
     const description = document.querySelector("#description");
     const dueDate = document.querySelector("#dueDate");
     const priority = document.querySelector("#priority");
+
+    if (!title.value || !dueDate.value || !priority.value) {
+      document.querySelector(".todo-form").reportValidity();
+      return;
+    }
 
     if (editingTodo) {
       editingTodo.update({
